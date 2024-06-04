@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tempo</title>
+
+    <script src="./js/app.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<header>
+    <img src="./img/info_471662.png" class="header" onclick="info()">
+    <h1>Shopping List</h1>
+
+    <hr class="header">
+</header>
+
+<body onload="setup(0)">
+    <div id="info">
+        <h2>INFO</h2>
+        <hr class="info">
+        <p class="info">
+            Con questo programma potrai creare, visualizzare e eliminare diverse liste della spesa
+            dove puoi modificare elementi o le loro categorie, come categoria, quantità e prezzo.
+
+            Per modificare un elemento dovrai cliccare due volte sull'elemento. I tasti a sinistra sono SOLO per modificare la lista.
+        </p>
+    </div>
+
+    <div id="container">
+        <div class="tools">
+            <button onclick="create(true)">
+                <em>Crea</em>
+            </button>
+
+            <button onclick="modify()">
+                <em>Modifica</em>
+            </button>
+
+            <button onclick="remove()">
+                <em>Rimuovi</em>
+            </button>
+
+            <button onclick="clearData()">
+                <em>ClearData</em>
+            </button>
+
+            <div id="creationLTool">
+                <h3>Crea</h3>
+                <hr class="creation">
+                
+                <input type="text" id="title" placeholder="List Name">
+                <button class="tool" onclick="create()" id="LBTool"> <em class="tool">Create</em> </button>
+            </div>
+
+            <div id="creationETool">
+                <h3 id="ETool">Inserisci</h3>
+                <hr class="creation">
+                
+                <input type="text" id="name" placeholder="Product Name">
+                <input type="text" id="quantity" placeholder="Quantity">
+                <input type="text" id="price" placeholder="Price">
+
+
+                <button class="tool" onclick="insert()" id="EBTool"> <em class="tool">Create</em> </button>
+            </div>
+        </div>
+
+        <div id="lists"></div>
+    </div>
+
+    <div id="edit">
+        <img src="./img/attribution-pencil_9291824.png" alt="Edit" class="edit" onclick="editElement()">
+        <hr>
+        <img src="./img/trash_3917378.png" alt="Remove" class="edit" onclick="removeElement()">
+    </div>
+</body>
+
+</html>

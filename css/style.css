@@ -1,0 +1,288 @@
+body {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgb(2, 131, 156) 100%);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+}
+
+header {
+    font-size: 1.5rem;
+}
+
+hr.header {
+    border: 0.25rem solid white;
+    border-radius: 0.5rem;
+}
+
+hr.info {
+    border: 0.125rem solid white;
+    border-radius: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+hr.creation {
+    border: 0.125rem solid white;
+    border-radius: 0.5rem;
+    margin: 1rem;
+}
+
+p.info {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-size: 1.55rem;
+    overflow:hidden; 
+}
+
+img.header {
+    filter: invert(1);
+    height: 4rem;
+    float: right;
+    transition: filter 0.5s;
+    margin-right: 2rem;
+}
+
+img.header:hover{
+    filter: invert(0);
+}
+
+h1 {
+    padding-left: 3rem;
+}
+
+h2 {
+    text-align: center;
+    font-size: 3rem; 
+}
+
+div#info {
+    width: 20%;
+    height: fit-content;
+    background-color: rgb(0, 153, 255);
+    border: 1rem solid white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 10rem;
+    margin-right: 2rem;
+    border-radius: 2rem;
+    z-index: 10;
+    display: none;
+}
+
+#container {
+    display: flex;
+}
+
+#lists {
+    display: grid;
+    width: 80%;
+    margin-top: 4rem;
+    margin-left: 10%;
+    margin-right: 5%;
+    grid-template-columns: 50% 50%;
+    gap: 2%;
+    height: fit-content;
+}
+
+div.tools {
+    width: 20%;
+    height: fit-content;
+}
+
+
+button {
+    width: 100%;
+    min-width: fit-content;
+    border: none;
+    border-radius: 2rem;
+    margin-left: 30%;
+    margin-top: 20%;
+    padding: 0.7rem;
+
+    background: linear-gradient(52deg, rgb(48, 42, 158) 0%, rgb(0, 0, 255) 35%, rgb(140, 0, 255) 100%);
+
+    transition: scale 0.15s ease-out
+}
+
+button:hover {
+    scale: 1.1;
+}
+
+div.list {
+    background-color: rgb(0, 162, 255);
+    width: 100%;
+    min-width: fit-content;
+    height: fit-content;
+    min-height: 5rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+em {
+    font-size: 3rem;
+    font-weight: bolder;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    background-color: aqua;
+    border: 0.2rem solid black;
+}
+
+div#creationLTool, div#creationETool{
+    display: none;
+    
+    width: 120%;
+
+    border-image: linear-gradient(52deg, rgb(48, 42, 158) 0%, rgb(0, 0, 255) 35%, rgb(140, 0, 255) 100%) 30;
+    border-width: 0.5rem;
+    border-style: solid;
+    
+    border-radius: 2rem;
+    margin-left: 3rem;
+    margin-top: 4rem;
+}
+
+input {
+    width: 80%;
+    margin-left: 8%;
+    margin-bottom: 1rem;
+
+    border-image: linear-gradient(52deg, rgb(48, 42, 158) 0%, rgb(0, 0, 255) 35%, rgb(140, 0, 255) 100%) 30;
+    border-width: 0.5rem;
+    border-style: solid;
+
+    background: rgba(87, 0, 250, 0.219);
+    font-family: inherit;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+textarea:focus, input:focus {
+    color: #ffffff;
+}
+
+input, select, textarea{
+    color: #00e1ff;
+}
+
+
+details > summary {
+    list-style: none;
+}
+details summary::-webkit-details-marker {
+    display:none;
+}
+
+h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+em.tool {
+    font-size: 1rem;
+}
+
+button.tool {
+    margin: 0;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    text-align: center;
+    font-size: 3rem;
+    margin: 1rem;
+}
+
+p.listdetails{
+    text-align: center;
+    word-wrap: break-word;
+    width: 80%;
+    font-size: 1.5rem;
+    margin: 0;
+    margin-bottom: 0.7rem;
+}
+
+div#edit {
+    display: none;
+    width: 7rem;
+    height: 3rem;
+    border-radius: 1rem;
+    background: linear-gradient(52deg, rgb(48, 42, 158) 0%, rgb(0, 0, 255) 35%, rgb(140, 0, 255) 100%);
+    border: 0.2rem solid #ffffff;
+}
+
+img.edit {
+    height: 2rem;
+    margin: 0.5rem;
+    filter: invert(1);
+
+    transition: scale 0.15s ease-out
+}
+
+img.edit:hover {
+    scale: 1.2;
+}
+
+div.marked {
+    width: 100%;
+    display: inline-flex;
+    margin-left: 5%;
+}
+
+input.marked {
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+    background-color: transparent;
+
+    box-sizing: border-box;
+    border: 0.20rem solid white;
+    border-radius: 0.5rem;
+    appearance: none;
+    background-color: transparent;
+    outline: none;
+    transition: scale 0.15s ease-out
+}
+
+input.marked:hover {
+    scale: 1.1;
+    margin-bottom: 0.4rem;
+    border-color: white;
+    background: linear-gradient(75deg, rgba(48, 42, 158, 0.5) 0%, rgba(0, 0, 255, 0.5) 35%, rgba(140, 0, 255, 0.5) 100%); 
+}
+
+input.marked:not(:disabled):checked {
+    margin-bottom: 0.5rem;
+    scale: 1.2;
+    border-color: white;
+    background: linear-gradient(75deg, rgb(48, 42, 158) 0%, rgb(0, 0, 255) 35%, rgb(140, 0, 255) 100%);
+}
+
+div.progressBar {
+    width: 90%;
+    margin-left: 4%;
+    height: 2rem;
+    border-radius: 1rem;
+    border: 0.25rem solid white;
+    align-content: center;
+}
+
+em.progressBar {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+}
+
+div.insideBar {
+    background: linear-gradient(75deg, rgb(48, 42, 158) 0%, rgb(0, 0, 255) 35%, rgb(140, 0, 255) 100%);
+    transition: width 0.15s ease-out;
+    border-radius: 0.75rem;
+    height: 100%;
+    width: 0%;
+    
+}
