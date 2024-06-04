@@ -31,15 +31,23 @@ function setup(preload) {
 
 
         for (let i = 0; i < sessionStorage.length; i++) {
-            if (sessionStorage.key(i) !== "") create(sessionStorage.key(i));
+            if (sessionStorage.key(i) !== "" && !sessionStorage.key(i).startsWith("markers-")) create(sessionStorage.key(i));
             else sessionStorage.removeItem("");
         }
 
 
-        for (let i = 0; i < sessionStorage.length; i++) {
-            let elements = JSON.parse(sessionStorage.getItem(sessionStorage.key(i)));
-            for (let j = 0; j < elements.length; j++) insert(elements[j], i, true);
+        for (let i = 0; i < sessionStorage.length; i++) if (!sessionStorage.key(i).startsWith("markers-")) {
+                let elements = JSON.parse(sessionStorage.getItem(sessionStorage.key(i)));
+                for (let j = 0; j < elements.length; j++) insert(elements[j], i, true);
         }
+
+        for (let i = 0; i < sessionStorage.length; i++) if (sessionStorage.key(i).startsWith("markers-")){
+            let elements = JSON.parse(sessionStorage.getItem(sessionStorage.key(i)));
+            for (let j = 0; j < elements.length; j++) if (elements[j] === true) check(i-1+"."+j);
+        }
+
+
+
 
     } else if (preload) {
         selected = 0;
@@ -78,7 +86,7 @@ function create(tool) {
                 "</div>" +
             "</div>";
         listEl[num] = [];
-        listSel[num] = 0;
+        listSel[num] = [];
         num++;
     } else {
         document.getElementById("creationLTool").style.display = "none";
@@ -117,7 +125,7 @@ function create(tool) {
         document.getElementById("title").value = "";
 
         listEl[num] = [];
-        listSel[num] = 0;
+        listSel[num] = [];
         num++;
     }
 }
@@ -199,11 +207,16 @@ function insert(debug, position, setup) {
                 "<div class=\"marked\">" +
                     "<p class=\"listdetails\" id=\"" + selected + "." + listEl[selected].length + "\" onclick=setSelectedElement(\"" + selected + "." + listEl[selected].length + "\")>" +
                         "Product Name: " + name + " | Quantity: " + quantity + " | Price: " + price + "£" +
-                    "</p> <input type=\"checkbox\" class=\"marked\" onclick=marked(\"" + selected + "." + listEl[selected].length + "\")>" +
+                    "</p>" + 
+                    "<input type=\"checkbox\" class=\"marked\" id=\"checked"+selected + "." + listEl[selected].length+"\" onclick=marked(\"" + selected + "." + listEl[selected].length + "\")>" +
                 "</div>";
 
             listEl[selected].push({"name": name, "price": price, "quantity": quantity});
+            listSel[selected].push(false);
         }
+
+        document.getElementById("progress" + selected).innerHTML = parseInt((countSelected() / listEl[selected].length) * 100) + "%"
+        document.getElementById("bar" + selected).style.width = (countSelected() / listEl[selected].length) * 100 + "%";
 
         sessionStorage.removeItem(document.getElementById("t" + selected).innerHTML)
         sessionStorage.setItem(document.getElementById("t" + selected).innerHTML, JSON.stringify(listEl[selected]))
@@ -255,7 +268,19 @@ function removeElement() {
     sessionStorage.removeItem(document.getElementById("t" + selected).innerHTML)
     sessionStorage.setItem(document.getElementById("t" + selected).innerHTML, JSON.stringify(listEl[selected]))
 
+
+    if (document.getElementById(selected + "." + listEl[selected].length).style.textDecorationLine.startsWith("line-through")) listSel[selected][selectedElement] = false;
+
     document.getElementById(selectedElement).remove();
+    document.getElementById("checked"+selectedElement).remove();
+
+    if (listEl[selected].length > 0){
+        document.getElementById("progress" + selected).innerHTML = parseInt((countSelected() / listEl[selected].length) * 100) + "%"
+        document.getElementById("bar" + selected).style.width = (countSelected() / listEl[selected].length) * 100 + "%";
+    } else {
+        document.getElementById("progress" + selected).innerHTML = "0%";
+        document.getElementById("bar" + selected).style.width = "0%";
+    }
 }
 
 function remove() {
@@ -275,18 +300,51 @@ function clearData() {
     sessionStorage.clear()
 }
 
-function marked(id) {
+function marked(id, autoset) {
+
+    if (typeof selectedElement !== Number) selectedElement = id.substring(2);
+
     let text = document.getElementById(id).style;
+
+    if (autoset){
+        selected = id.substring(0,1);
+        selectedElement = id.substring(2);
+    }
 
     if (text.textDecorationLine.startsWith("line-through")) {
         text.textDecorationLine = "none";
-        listSel[selected]--;
+        listSel[selected][selectedElement] = false;
     } else {
         text.textDecorationLine = "line-through";
-        listSel[selected]++;
+        listSel[selected][selectedElement] = true;
     }
 
-    document.getElementById("progress" + selected).innerHTML = parseInt((listSel[selected] / listEl[selected].length) * 100) + "%"
-    document.getElementById("bar" + selected).style.width = (listSel[selected] / listEl[selected].length) * 100 + "%";
+    document.getElementById("progress" + selected).innerHTML = parseInt((countSelected() / listEl[selected].length) * 100) + "%"
+    document.getElementById("bar" + selected).style.width = (countSelected() / listEl[selected].length) * 100 + "%";
+
+    sessionStorage.removeItem("markers-"+document.getElementById("t" + selected).innerHTML)
+    sessionStorage.setItem("markers-"+document.getElementById("t" + selected).innerHTML, JSON.stringify(listSel[selected]))
+
+    if (autoset!==true) console.log(sessionStorage)
+    if (autoset) {
+        selected = undefined;
+        selectedElement = null;
+    }
+}
+
+function countSelected(){
+    let sel = 0;
+    for (let i=0;i<listSel[selected].length;i++){
+        try {
+            if(document.getElementById("checked"+selected+"."+i).checked) sel++;
+            else if (document.getElementById(selected+"."+i).style.textDecorationLine.startsWith("line")) document.getElementById("checked"+selected+"."+i).checked = true   
+        } catch (error) {}
+    }
+    return sel;
+}
+
+function check(id){
+    document.getElementById("checked"+id).checked = true;
+    marked(id,true)
 }
 
